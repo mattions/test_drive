@@ -7,16 +7,21 @@ rabbitmq:
     - "15672:15672"
     - "5672:5672"
 
+redis:
+ image: redis:3.0.3
+
 celery:
  build: .
  working_dir: /code
- command:  su -m myuser -c "sleep 6 &&  celery -A test_drive worker --loglevel=info"
+ command:  su -m myuser -c "celery -A test_drive worker --loglevel=info"
  environment:
     - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    - CELERY_RESULT_BACKEND=redis://redis:6379/0
     
  links:
     - rabbitmq
     - db
+    - redis
  volumes:
     - .:/code
 
@@ -24,6 +29,7 @@ flower:
   build: .
   environment:
     - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    - CELERY_RESULT_BACKEND=redis://redis:6379/0
     
   working_dir: /code
   command: su -m myuser -c "sleep 6 && celery flower -A test_drive --port=5555"
@@ -40,6 +46,7 @@ web:
   command: python manage.py runserver 0.0.0.0:8000
   environment:
     - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    - CELERY_RESULT_BACKEND=redis://redis:6379/0
   volumes:
     - .:/code
   ports:
@@ -47,3 +54,4 @@ web:
   links:
     - db
     - rabbitmq
+    - redis
