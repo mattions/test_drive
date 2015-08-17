@@ -1,0 +1,11 @@
+
+*.pyc
+.settings
+.vagrant
+.idea
+node_modules
+coinduit/static/less/style.css
+coinduit/settings/site_media/
+__pycache__
+ghostdriver.log
+.DS_Store
