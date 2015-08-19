@@ -6,7 +6,7 @@ from .tasks import add
 
 
 class AddView(TemplateView):
-    template_name = "job/add.html"
+    template_name = "jobs/add.html"
     
     def get_context_data(self, **kwargs):
         context = super(AddView, self).get_context_data(**kwargs)
