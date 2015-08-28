@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h1>Simple django app to test celery and docker in development</h1>
+
+<p>Enable jobs:</p>
+<ul>
+	<li>Addition: <a href="{% url "jobs-add" %}">2+2</a></li>
+</ul>
+{% endblock %}

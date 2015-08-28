@@ -10,9 +10,19 @@ class AddView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(AddView, self).get_context_data(**kwargs)
-        result = add.delay(2, 2)
-        context['res'] = {"status" : result.status, 
-			  "result" : result.get()
-			}
+        task = add.delay(2, 2)
+        context['task_id'] = task.task_id
 
+        return context
+
+
+class TaskResultView(TemplateView):
+    template_name= "jobs/taskid.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(TaskResultView, self).get_context_data(**kwargs)
+        task_id = kwargs['task_id']
+        async_res = AsyncResult(task_id)
+        context['result'] = async_res.get()
+        context['task_id'] = task_id
         return context

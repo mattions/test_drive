@@ -1,5 +1,7 @@
-<html>
+{% extends "base.html" %}
+
+{% block body %}
 <h1>Add View</h2>
 	
-	{{res}}
-</html>
+	<p>Task submitted. Result: <a href="{% url "jobs-result" task_id=task_id %}">{% url "jobs-result" task_id=task_id %}</a>
+{% endblock %}

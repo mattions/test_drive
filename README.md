@@ -21,5 +21,3 @@ This manage all the containers specification. Notable: the celery, flower and we
 are all using the same image to launch the file.
 
 More about this in a blog post coming up @ http://blog.michelemattioni.me
-
-	
